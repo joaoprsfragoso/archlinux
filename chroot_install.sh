@@ -1,7 +1,7 @@
 #!/usr/bin/bash
 
 HOSTNAME="NO_HOSTNAME"
-UUID_DISK1=$(blkid /dev/"$DISK"2 -s UUID -o value)
+UUID_DISK2="NO_UUID"
 
 # Time zone
 ln -sf /usr/share/zoneinfo/Europe/Lisbon /etc/localtime
@@ -21,19 +21,18 @@ sed -i -e "s/HOSTNAME/$HOSTNAME/g" /etc/hostname
 sed -i -e "s/HOSTNAME/$HOSTNAME/g" /etc/hosts
 
 # Initramfs
-dracut -H -f --hostonly-cmdline /boot/initramfs-linux.img
+sed -i -e "s/HOOKS/#HOOKS/g" /etc/hosts
+echo "HOOKS=(base systemd autodetect modconf block keyboard fsck filesystems)" >> /etc/mkinitcpio.conf
+
+mkinitcpio -P
 
 # Boot Loader
 bootctl --path=/boot install
 echo 'default       arch' > /boot/loader/loader.conf
-echo 'editor        no' >> /boot/loader/loader.conf
-echo 'auto-entries  no' >> /boot/loader/loader.conf
-echo 'auto-firmware no' >> /boot/loader/loader.conf
-echo 'console-mode  max' >> /boot/loader/loader.conf
 echo 'title     Arch Linux' > /boot/loader/entries/arch.conf
 echo 'linux     /vmlinuz-linux' >> /boot/loader/entries/arch.conf
 echo 'initrd    /initramfs-linux.img' >> /boot/loader/entries/arch.conf
-echo "options   root=$UUID_DISK1" >> /boot/loader/entries/arch.conf
+echo "options   root=$UUID_DISK2" >> /boot/loader/entries/arch.conf
 
 # Root password
 passwd

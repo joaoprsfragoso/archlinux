@@ -27,13 +27,15 @@ pacman -Syy pacman-contrib --noconfirm
 curl -s 'https://www.archlinux.org/mirrorlist/country=GB&protocol=https&use_mirror_status=on' | sed -e 's/^#Server/Server/' -e '/^#/d' | rankmirrors -n 5 -
 
 # Install essential packages
-pacstrap /mnt base linux dracut
+pacstrap /mnt base linux mkinitcpio xfs-progs
 
 # Fstab
 genfstab -U /mnt >> /mnt/etc/fstab
 
 # Copy Chroot Install
 sed -i -e "s/NO_HOSTNAME/$HOSTNAME/g" /etc/hosts
+sed -i -e "s/NO_UUID/$(blkid /dev/"$DISK"2 -s UUID -o value)/g"
+
 cp chroot_install.sh /mnt/chroot_install.sh
 
 # Chroot
