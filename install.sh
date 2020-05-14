@@ -33,8 +33,8 @@ pacstrap /mnt base linux mkinitcpio xfs-progs
 genfstab -U /mnt >> /mnt/etc/fstab
 
 # Copy Chroot Install
-sed -i -e "s/NO_HOSTNAME/$HOSTNAME/g" /etc/hosts
-sed -i -e "s/NO_UUID/$(blkid /dev/"$DISK"2 -s UUID -o value)/g"
+sed -i -e "s/NO_HOSTNAME/$HOSTNAME/g" chroot_install.sh
+sed -i -e "s/NO_UUID/$(blkid /dev/"$DISK"2 -s UUID -o value)/g" chroot_install.sh
 
 cp chroot_install.sh /mnt/chroot_install.sh
 
