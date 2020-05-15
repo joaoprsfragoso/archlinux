@@ -24,6 +24,9 @@ sed -i -e "s/HOSTNAME/$HOSTNAME/g" /etc/hosts
 # sed -i -e "s/HOOKS/#HOOKS/g" /etc/hosts
 # echo "HOOKS=(base systemd autodetect modconf block keyboard fsck filesystems)" >> /etc/mkinitcpio.conf
 
+# Root password
+passwd
+
 mkinitcpio -P
 
 # Boot Loader
@@ -32,7 +35,4 @@ echo 'default       arch' > /boot/loader/loader.conf
 echo 'title     Arch Linux' > /boot/loader/entries/arch.conf
 echo 'linux     /vmlinuz-linux' >> /boot/loader/entries/arch.conf
 echo 'initrd    /initramfs-linux.img' >> /boot/loader/entries/arch.conf
-echo "options   root=$UUID_DISK2" >> /boot/loader/entries/arch.conf
-
-# Root password
-passwd
+echo "options   root=UUID=$UUID_DISK2" >> /boot/loader/entries/arch.conf
