@@ -27,7 +27,7 @@ pacman -Syy pacman-contrib --noconfirm
 curl -s 'https://www.archlinux.org/mirrorlist/country=GB&protocol=https&use_mirror_status=on' | sed -e 's/^#Server/Server/' -e '/^#/d' | rankmirrors -n 5 -
 
 # Install essential packages
-pacstrap /mnt base linux mkinitcpio xfs-progs
+pacstrap /mnt base linux mkinitcpio xfsprogs xfsdump
 
 # Fstab
 genfstab -U /mnt >> /mnt/etc/fstab

@@ -21,8 +21,8 @@ sed -i -e "s/HOSTNAME/$HOSTNAME/g" /etc/hostname
 sed -i -e "s/HOSTNAME/$HOSTNAME/g" /etc/hosts
 
 # Initramfs
-sed -i -e "s/HOOKS/#HOOKS/g" /etc/hosts
-echo "HOOKS=(base systemd autodetect modconf block keyboard fsck filesystems)" >> /etc/mkinitcpio.conf
+# sed -i -e "s/HOOKS/#HOOKS/g" /etc/hosts
+# echo "HOOKS=(base systemd autodetect modconf block keyboard fsck filesystems)" >> /etc/mkinitcpio.conf
 
 mkinitcpio -P
 
